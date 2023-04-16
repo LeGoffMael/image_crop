@@ -1,4 +1,4 @@
-## 0.0.1
+## 0.0.2
 
 - [#75](https://github.com/lykhonis/image_crop/pull/75): fix sample image on android
 - [#77](https://github.com/lykhonis/image_crop/pull/77): disable initial magnification

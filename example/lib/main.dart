@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:insta_assets_crop/insta_assets_crop.dart';
+import 'package:insta_assets_crop_new/insta_assets_crop_new.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                   'Crop Image',
                   style: Theme.of(context)
                       .textTheme
-                      .button
+                      .labelLarge
                       .copyWith(color: Colors.white),
                 ),
                 onPressed: () => _cropImage(),
@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
     return TextButton(
       child: Text(
         'Open Image',
-        style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+        style: Theme.of(context).textTheme.labelLarge.copyWith(color: Colors.white),
       ),
       onPressed: () => _openImage(),
     );

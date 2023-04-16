@@ -1,4 +1,4 @@
-part of insta_assets_crop;
+part of insta_assets_crop_new;
 
 class ImageOptions {
   final int width;
@@ -10,7 +10,7 @@ class ImageOptions {
   });
 
   @override
-  int get hashCode => hashValues(width, height);
+  int get hashCode => Object.hash(width, height);
 
   @override
   bool operator ==(other) =>
