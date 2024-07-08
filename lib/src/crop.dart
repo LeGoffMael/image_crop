@@ -137,7 +137,8 @@ class CropState extends State<Crop> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(Crop oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.child != oldWidget.child || widget.size != oldWidget.size) {
+    if (widget.child.key != oldWidget.child.key ||
+        widget.size != oldWidget.size) {
       _updateImage();
     } else if (widget.aspectRatio != oldWidget.aspectRatio) {
       _scale = 1.0;
