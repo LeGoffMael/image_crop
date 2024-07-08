@@ -27,7 +27,6 @@ class CropTransform extends StatelessWidget {
       final size = constraints.biggest;
       final rect = getRect(size);
 
-      final src = Offset.zero & childSize;
       final dst = Rect.fromLTWH(
         view.left * childSize.width * scale * ratio,
         view.top * childSize.height * scale * ratio,
@@ -35,15 +34,8 @@ class CropTransform extends StatelessWidget {
         childSize.height * scale * ratio,
       );
 
-      print(
-          '---------------------------------------------------------------------');
-
       final double translateX = dst.left;
       final double translateY = dst.top;
-
-      print('LAYOUT BUILDER 1 = translateX=$translateX translateY=$translateY');
-      print(
-          'LAYOUT BUILDER 2 = rect=$rect src=$src dst=$dst scale=$scale ratio=$ratio');
 
       return Transform.translate(
         offset: Offset(rect.left, rect.top),

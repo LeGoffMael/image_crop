@@ -6,6 +6,26 @@ import 'package:flutter/services.dart';
 import 'package:insta_assets_crop/insta_assets_crop.dart';
 import 'package:image_picker/image_picker.dart';
 
+class PickedFile {
+  const PickedFile({required this.file, required this.size});
+
+  static Future<PickedFile> create(File file) async {
+    final decodedImage = await decodeImageFromList(await file.readAsBytes());
+    final height = decodedImage.height;
+    final width = decodedImage.width;
+
+    return PickedFile(
+      file: file,
+      size: Size(width.toDouble(), height.toDouble()),
+    );
+  }
+
+  Future<FileSystemEntity> delete() => file.delete();
+
+  final File file;
+  final Size size;
+}
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -24,9 +44,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final cropKey = GlobalKey<CropState>();
-  File? _file;
-  File? _sample;
-  File? _lastCropped;
+  PickedFile? _sample;
+  File? _file, _lastCropped;
 
   @override
   void dispose() {
@@ -59,11 +78,12 @@ class _MyAppState extends State<MyApp> {
       children: <Widget>[
         if (_sample != null)
           Expanded(
-            child: Crop.file(
-              _sample!,
+            child: Crop(
+              child: Image.file(_sample!.file),
+              size: _sample!.size,
               key: cropKey,
               disableResize: true,
-              aspectRatio: 1,
+              aspectRatio: 4 / 5,
             ),
           ),
         Container(
@@ -104,12 +124,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _openImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final xfile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (pickedFile == null) return;
+    if (xfile == null) return;
 
-    final file = File(pickedFile.path);
+    final file = File(xfile.path);
     final sample = await InstaAssetsCrop.sampleImage(
       file: file,
       preferredSize: context.size?.longestSide.ceil(),
@@ -118,8 +137,10 @@ class _MyAppState extends State<MyApp> {
     _sample?.delete();
     _file?.delete();
 
+    final pickedFile = await PickedFile.create(sample);
+
     setState(() {
-      _sample = sample;
+      _sample = pickedFile;
       _file = file;
     });
   }
