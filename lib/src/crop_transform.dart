@@ -50,11 +50,10 @@ class CropTransform extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.cover,
                 alignment: Alignment.topLeft,
-                child: child,
+                child: SizedBox.fromSize(size: childSize, child: child),
               ),
             ),
           ),
-          // ),
         ),
       );
     });
