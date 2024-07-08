@@ -256,7 +256,7 @@ class CropState extends State<Crop> with TickerProviderStateMixin {
             child: _image == null && widget.placeholderWidget != null
                 ? widget.placeholderWidget
                 : CustomPaint(
-                    painter: _CropPainter(
+                    foregroundPainter: _CropPainter(
                       image: _image,
                       ratio: _ratio,
                       view: _view,
@@ -266,6 +266,19 @@ class CropState extends State<Crop> with TickerProviderStateMixin {
                       backgroundColor: widget.backgroundColor,
                       disableResize: widget.disableResize,
                       cropHandleSize: cropHandleSize,
+                    ),
+                    child: CropTransform(
+                      ratio: _ratio,
+                      scale: _scale,
+                      view: _view,
+                      childSize: _image != null
+                          ? Size(
+                              _image!.width.toDouble(),
+                              _image!.height.toDouble(),
+                            )
+                          : Size.zero,
+                      getRect: (size) => _getRect(size, cropHandleSize),
+                      child: Image(image: widget.image),
                     ),
                   ),
           ),
@@ -578,10 +591,10 @@ class CropState extends State<Crop> with TickerProviderStateMixin {
       return;
     }
 
-    var areaLeft = _area.left + (left ?? 0.0);
-    var areaBottom = _area.bottom + (bottom ?? 0.0);
-    var areaTop = _area.top + (top ?? 0.0);
-    var areaRight = _area.right + (right ?? 0.0);
+    double areaLeft = _area.left + (left ?? 0.0);
+    double areaBottom = _area.bottom + (bottom ?? 0.0);
+    double areaTop = _area.top + (top ?? 0.0);
+    double areaRight = _area.right + (right ?? 0.0);
     double width = areaRight - areaLeft;
     double height = (image.width * _view.width * width) /
         (image.height * _view.height * (widget.aspectRatio ?? 1.0));
@@ -730,6 +743,13 @@ class CropState extends State<Crop> with TickerProviderStateMixin {
   }
 }
 
+Rect _getRect(Size size, double cropHandleSize) => Rect.fromLTWH(
+      cropHandleSize / 2,
+      cropHandleSize / 2,
+      size.width - cropHandleSize,
+      size.height - cropHandleSize,
+    );
+
 class _CropPainter extends CustomPainter {
   final ui.Image? image;
   final Rect view;
@@ -765,12 +785,7 @@ class _CropPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      cropHandleSize / 2,
-      cropHandleSize / 2,
-      size.width - cropHandleSize,
-      size.height - cropHandleSize,
-    );
+    final rect = _getRect(size, cropHandleSize);
 
     canvas.save();
     canvas.translate(rect.left, rect.top);
@@ -792,10 +807,16 @@ class _CropPainter extends CustomPainter {
         image.height * scale * ratio,
       );
 
-      canvas.save();
-      canvas.clipRect(Rect.fromLTWH(0.0, 0.0, rect.width, rect.height));
-      canvas.drawImageRect(image, src, dst, paint);
-      canvas.restore();
+      print(
+          'CROP PAINTER     = rect=$rect src=$src dst=$dst scale=$scale ratio=$ratio');
+
+      // TODO: just for test, to see alignment throught it
+      // paint.color = Color.fromRGBO(0, 0, 0, 0.3);
+
+      // canvas.save();
+      // canvas.clipRect(Rect.fromLTWH(0.0, 0.0, rect.width, rect.height));
+      // canvas.drawImageRect(image, src, dst, paint);
+      // canvas.restore();
     }
 
     paint.color = backgroundColor.withOpacity(

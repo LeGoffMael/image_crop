@@ -59,7 +59,12 @@ class _MyAppState extends State<MyApp> {
       children: <Widget>[
         if (_sample != null)
           Expanded(
-            child: Crop.file(_sample!, key: cropKey),
+            child: Crop.file(
+              _sample!,
+              key: cropKey,
+              disableResize: true,
+              aspectRatio: 1,
+            ),
           ),
         Container(
           padding: const EdgeInsets.only(top: 20.0),
