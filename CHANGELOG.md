@@ -1,3 +1,8 @@
+## 0.1.2
+
+- Fix lint analysis warnings
+- Increase SDK
+
 ## 0.1.1
 
 - Upgrade to new Android Plugin API (flutter 3.29) [doc](https://docs.flutter.dev/release/breaking-changes/plugin-api-migration)
