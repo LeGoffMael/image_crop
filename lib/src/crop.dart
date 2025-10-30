@@ -1,4 +1,4 @@
-part of insta_assets_crop;
+part of 'package:insta_assets_crop/insta_assets_crop.dart';
 
 const _kCropGridColumnCount = 3;
 const _kCropGridRowCount = 3;
@@ -666,9 +666,9 @@ class _CropPainter extends CustomPainter {
 
     final paint = Paint()..isAntiAlias = false;
 
-    paint.color = backgroundColor.withOpacity(
-        _kCropOverlayActiveOpacity * active +
-            backgroundColor.opacity * (1.0 - active));
+    paint.color = backgroundColor.withValues(
+        alpha: _kCropOverlayActiveOpacity * active +
+            backgroundColor.a * (1.0 - active));
     final boundaries = Rect.fromLTWH(
       rect.width * area.left,
       rect.height * area.top,
@@ -748,7 +748,7 @@ class _CropPainter extends CustomPainter {
 
     final paint = Paint()
       ..isAntiAlias = false
-      ..color = _kCropGridColor.withOpacity(_kCropGridColor.opacity * active)
+      ..color = _kCropGridColor.withValues(alpha: _kCropGridColor.a * active)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 

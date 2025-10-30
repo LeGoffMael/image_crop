@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                         duration: kThemeAnimationDuration,
                         child: CircleAvatar(
                           foregroundColor: Colors.white,
-                          backgroundColor: Colors.black.withOpacity(0.7),
+                          backgroundColor: Colors.black.withValues(alpha: 0.7),
                           radius: 24,
                           child: const Icon(Icons.play_arrow_rounded, size: 40),
                         ),
