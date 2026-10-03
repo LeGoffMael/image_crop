@@ -1,3 +1,9 @@
+## Unreleased
+
+- Add Swift Package Manager support on iOS [doc](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-plugin-authors)
+- Compile against Android SDK 36, which current AndroidX libraries require
+- Raise the iOS deployment target to 13.0, the minimum supported by Flutter
+
 ## 0.1.2
 
 - Fix lint analysis warnings

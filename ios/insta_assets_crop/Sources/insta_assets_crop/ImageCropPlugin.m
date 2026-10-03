@@ -1,4 +1,4 @@
-#import "ImageCropPlugin.h"
+#import "./include/insta_assets_crop/ImageCropPlugin.h"
 
 #import <Photos/Photos.h>
 #import <MobileCoreServices/MobileCoreServices.h>
